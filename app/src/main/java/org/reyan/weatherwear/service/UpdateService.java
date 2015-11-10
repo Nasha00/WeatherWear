@@ -24,7 +24,8 @@ public class UpdateService {
 
         String key = null;
         if (specify_location) {
-            key = settings.getString("location", "id=5391811@San Diego, US").split("@", 2)[0];
+            key = settings.getString("location",
+                    "/q/zmw:92101.1.99999@San Diego, California, US").split("@", 2)[0];
         } else {
             LocationManager locationManager =
                     (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
@@ -48,7 +49,11 @@ public class UpdateService {
         // need synchronized here for domain?
         JSONObject json = null;
         try {
-            json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER);
+            if (specify_location) {
+                json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_ID);
+            } else {
+                json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_COORDINATE);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -57,12 +62,23 @@ public class UpdateService {
             Log.d("UPDATE", "running");
 
             try {
-                JSONObject main = json.getJSONObject("main");
-                double temperature = main.getDouble("temp");
-                String cityName = json.getString("name");
+                if (specify_location) {
+                    JSONObject main = json.getJSONObject("current_observation");
+                    JSONObject location = main.getJSONObject("display_location");
+                    String cityName = location.getString("city");
+                    double temperature = main.getDouble("temp_c");
 
-                mainActivity.getWeather().setTemperature(temperature);
-                mainActivity.getWeather().setCityName(cityName);
+
+                    mainActivity.getWeather().setTemperature(temperature);
+                    mainActivity.getWeather().setCityName(cityName);
+                } else {
+                    JSONObject main = json.getJSONObject("main");
+                    double temperature = main.getDouble("temp");
+                    String cityName = json.getString("name");
+
+                    mainActivity.getWeather().setTemperature(temperature);
+                    mainActivity.getWeather().setCityName(cityName);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
                 return false;

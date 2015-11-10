@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 Integer dressing_style =
                         Integer.parseInt(settings.getString("dressing_style", "-1"));
                 Boolean specify_location = settings.getBoolean("specify_location", false);
-                String location = settings.getString("location", "5391811@San Diego, US");
+                String location = settings.getString("location",
+                        "/q/zmw:92101.1.99999@San Diego, California, US");
                 Boolean temperature = settings.getBoolean("temperature", true);
                 Boolean wind_speed = settings.getBoolean("wind_speed", true);
 

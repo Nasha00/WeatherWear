@@ -29,22 +29,17 @@ public class SearchAsyncTask extends AsyncTask<String, Void, List<City>> {
         try {
             JSONArray jsonArray = JSONService
                     .getJSONObject(params[0], JSONService.SEARCH_CITY)
-                    .getJSONArray("list");
+                    .getJSONArray("RESULTS");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject item = jsonArray.getJSONObject(i);
-                JSONObject coord = item.getJSONObject("coord");
-                JSONObject sys = item.getJSONObject("sys");
-                long id = item.getLong("id");
-                double latitude = coord.getDouble("lat");
-                double longitude = coord.getDouble("lon");
+                String id = item.getString("l");
+                double latitude = item.getDouble("lat");
+                double longitude = item.getDouble("lon");
                 String cityName = item.getString("name");
-                String countryName = sys.getString("country");
-                if (cityName != null
-                        && countryName != null
-                        && !"".equals(cityName)
-                        && !"".equals(countryName)) {
+                String countryName = item.getString("c");
+                String type = item.getString("type");
+                if ("city".equals(type)) {
                     result.add(new City(id, latitude, longitude, cityName, countryName));
-                    // result.add(City.getCity(id, latitude, longitude, cityName, countryName));
                 }
             }
         } catch (JSONException e) {

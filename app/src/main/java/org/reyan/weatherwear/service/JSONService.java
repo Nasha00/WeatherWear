@@ -14,24 +14,24 @@ import java.net.URL;
  */
 public class JSONService {
 
-    public static final int ACQUIRE_WEATHER = 0;
-    public static final int ACQUIRE_CITY = 1;
+    public static final int ACQUIRE_WEATHER_BY_ID = 0;
+    public static final int ACQUIRE_WEATHER_BY_COORDINATE = 1;
     public static final int SEARCH_CITY = 2;
 
-    // Acquire weather by id or coordinate: BASE + "id or ordinate" + API_KEY
-    private static final String BASE_URL_FOR_ACQUIRING_WEATHER =
+    // Acquire weather by id: HEAD + id + TAIL
+    private static final String HEAD_URL_FOR_ACQUIRING_WEATHER_BY_ID =
+            "http://api.wunderground.com/api/fd8aad1999895464/conditions";
+    private static final String TAIL_URL_FOR_ACQUIRING_WEATHER_BY_ID = ".json";
+
+    // Acquire weather by coordinate: HEAD + ordinate + TAIL
+    private static final String BASE_URL_FOR_ACQUIRING_WEATHER_BY_COORDINATE =
             "http://api.openweathermap.org/data/2.5/weather?";
-    private static final String API_KEY = "&appid=2cc497cafac898b5b9aae020a2040dc2";
+    private static final String TAIL_URL_FOR_ACQUIRING_WEATHER_BY_COORDINATE =
+            "&appid=2cc497cafac898b5b9aae020a2040dc2";
 
-    // Acquire city by coordinate: HEAD + "latitude, longitude" + TAIL
-    private static final String HEAD_URL_FOR_ACQUIRING_CITY =
-            "http://maps.googleapis.com/maps/api/geocode/json?latlng=";
-    private static final String TAIL_URL_FOR_ACQUIRING_CITY = "&sensor=true";
-
-    // Search city: BASE + "keyword" + "&cnt=" + "restricted num" + API_KEY
+    // Search city: HEAD + keyword
     private static final String BASE_URL_FOR_SEARCHING_CITY =
-            "http://api.openweathermap.org/data/2.5/find?mode=json&type=like&q=";
-    private static final int RESTRICTED_NUM = 8;
+            "http://autocomplete.wunderground.com/aq?query=";
 
     public static JSONObject getJSONObject(String key, int type) throws JSONException {
         HttpURLConnection con = null;
@@ -39,20 +39,19 @@ public class JSONService {
 
         try {
             switch (type) {
-                case ACQUIRE_WEATHER:
-                    con = (HttpURLConnection) new URL(BASE_URL_FOR_ACQUIRING_WEATHER
+                case ACQUIRE_WEATHER_BY_ID:
+                    con = (HttpURLConnection) new URL(HEAD_URL_FOR_ACQUIRING_WEATHER_BY_ID
                             + key
-                            + API_KEY).openConnection();
+                            + TAIL_URL_FOR_ACQUIRING_WEATHER_BY_ID).openConnection();
                     break;
-                case ACQUIRE_CITY:
-                    con = (HttpURLConnection) new URL(HEAD_URL_FOR_ACQUIRING_CITY
+                case ACQUIRE_WEATHER_BY_COORDINATE:
+                    con = (HttpURLConnection) new URL(BASE_URL_FOR_ACQUIRING_WEATHER_BY_COORDINATE
                             + key
-                            + TAIL_URL_FOR_ACQUIRING_CITY).openConnection();
+                            + TAIL_URL_FOR_ACQUIRING_WEATHER_BY_COORDINATE).openConnection();
                     break;
                 case SEARCH_CITY:
                     con = (HttpURLConnection) new URL(BASE_URL_FOR_SEARCHING_CITY
-                            + key + "&cnt=" + RESTRICTED_NUM
-                            + API_KEY).openConnection();
+                            + key).openConnection();
                     break;
                 default:
                     return null;
