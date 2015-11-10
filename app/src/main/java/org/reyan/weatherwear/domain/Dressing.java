@@ -16,7 +16,7 @@ public class Dressing {
     private String umbrella = "";
     private String glove = "";
 
-    public void clear() {
+    public void reset() {
         hat = "";
         glasses = "";
         neck = "";

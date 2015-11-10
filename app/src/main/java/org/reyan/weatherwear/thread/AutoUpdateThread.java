@@ -10,7 +10,8 @@ import org.reyan.weatherwear.service.UpdateService;
  */
 public class AutoUpdateThread extends Thread {
 
-    private static final long INTERVAL = 20000;
+    // update every ... milliseconds
+    private static final long INTERVAL = 60000;
 
     private volatile boolean finished;
 

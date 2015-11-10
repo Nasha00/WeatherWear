@@ -11,9 +11,9 @@ import org.reyan.weatherwear.utility.IconCode2ConditionMap;
 /**
  * Created by reyan on 11/4/15.
  */
-public class Algorithm {
+public class DressingUpdateService {
 
-    public static boolean dress(MainActivity mainActivity) {
+    public static boolean updateDressing(MainActivity mainActivity) {
 
         //Gather gender and style information from settings
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mainActivity);
@@ -25,7 +25,7 @@ public class Algorithm {
 
         Weather weather = mainActivity.getWeather();
         Dressing dressing = mainActivity.getDressing();
-        dressing.clear();
+        dressing.reset();
 
         //Get weather condition information
         String condition =
