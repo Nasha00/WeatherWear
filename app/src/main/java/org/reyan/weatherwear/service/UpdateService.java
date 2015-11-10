@@ -12,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.reyan.weatherwear.activity.MainActivity;
 import org.reyan.weatherwear.domain.Weather;
-import org.reyan.weatherwear.utility.IconCodeMap;
+import org.reyan.weatherwear.utility.IconURL2IconCodeMap;
 
 /**
  * Created by reyan on 11/4/15.
@@ -93,7 +93,8 @@ public class UpdateService {
             }
 
             if (isWeatherUpdated) {
-                // update Algorithm
+                Algorithm.dress(mainActivity);
+                Log.d("dressing test", mainActivity.getDressing().toString());
             }
             // ??? synchonized(this) {}
             // update weather based on json
@@ -224,7 +225,7 @@ public class UpdateService {
     private static String convertIconURL2IconCode(String iconURL) {
         // Sample: "http://icons.wxug.com/i/c/k/nt_partlycloudy.gif"
         String[] array = iconURL.split("/");
-        return IconCodeMap.iconCodeMap.get(array[array.length - 1]);
+        return IconURL2IconCodeMap.ICON_URL_2_ICON_CODE_MAP.get(array[array.length - 1]);
     }
 
 }

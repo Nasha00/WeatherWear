@@ -13,13 +13,12 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.github.pwittchen.weathericonview.WeatherIconView;
 
 import org.reyan.weatherwear.R;
 import org.reyan.weatherwear.domain.Dressing;
@@ -63,9 +62,89 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
-                // ui update here
-                temperature.setText(String.valueOf(weather.getTempF()));
-                cityName.setText(weather.getCityName());
+                /*
+                 For weather icon, later we can combine wind and temperature
+                 to choose a better one
+                  */
+                String iconCode = weather.getIconCode();
+                switch (iconCode) {
+                    case "01d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_sunny));
+                        break;
+                    case "01n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_clear));
+                        break;
+                    case "02d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_cloudy));
+                        break;
+                    case "02n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_cloudy));
+                        break;
+                    case "03d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_cloudy_high));
+                        break;
+                    case "03n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_cloudy_high));
+                        break;
+                    case "04d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_cloudy_windy));
+                        break;
+                    case "04n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_cloudy_windy));
+                        break;
+                    case "09d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_showers));
+                        break;
+                    case "09n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_showers));
+                        break;
+                    case "10d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_rain));
+                        break;
+                    case "10n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_rain));
+                        break;
+                    case "11d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_thunderstorm));
+                        break;
+                    case "11n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_thunderstorm));
+                        break;
+                    case "13d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_snow));
+                        break;
+                    case "13n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_snow));
+                        break;
+                    case "50d":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_day_fog));
+                        break;
+                    case "50n":
+                        weatherIconViewWeather.setIconResource(getString(R.string.wi_night_fog));
+                        break;
+                    default:
+                        break;
+                }
+                SharedPreferences settings =
+                        PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                boolean temperature = settings.getBoolean("temperature", true);
+                boolean wind_speed = settings.getBoolean("wind_speed", true);
+                if (temperature) {
+                    textViewTemperature.setText(
+                            String.format("%.1f", weather.getTempF()) + "\u2109");
+                } else {
+                    textViewTemperature.setText(
+                            String.format("%.1f", weather.getTempC()) + "\u2103");
+                }
+                textViewCityName.setText(weather.getCityName());
+                textViewHumidity.setText(String.format("%.0f", weather.getHumidity()) + "%");
+                textViewPressure.setText(String.format("%.2f", weather.getPressure()) + "kPa");
+                if (wind_speed) {
+                    textViewWind.setText(String.format("%.2f", weather.getWindSpeedMPH()) + "MPH");
+                } else {
+                    textViewWind.setText(String.format("%.2f", weather.getWindSpeedKPH()) + "KPH");
+                }
+                textViewRecommender.setText(dressing.toString());
             }
         }
 
@@ -78,10 +157,15 @@ public class MainActivity extends AppCompatActivity {
     public Weather getWeather() { return weather; }
     public Dressing getDressing() { return dressing; }
 
-    private Button testButton;
+    private WeatherIconView weatherIconViewWeather;
+    private TextView textViewTemperature;
+    private TextView textViewCityName;
+    private TextView textViewHumidity;
+    private TextView textViewPressure;
+    private TextView textViewWind;
+    private TextView textViewRecommender;
 
-    private TextView temperature;
-    private TextView cityName;
+    private Button testButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,36 +174,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // For test
-        final SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        testButton = (Button) findViewById(R.id.testButton);
-        testButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Boolean gender = settings.getBoolean("gender", true);
-                Integer temperature_preference =
-                        Integer.parseInt(settings.getString("temperature_preference", "-1"));
-                Integer dressing_style =
-                        Integer.parseInt(settings.getString("dressing_style", "-1"));
-                Boolean specify_location = settings.getBoolean("specify_location", false);
-                String location = settings.getString("location",
-                        "/q/zmw:92101.1.99999@San Diego, California, US");
-                Boolean temperature = settings.getBoolean("temperature", true);
-                Boolean wind_speed = settings.getBoolean("wind_speed", true);
-
-                Log.d("gender", gender.toString());
-                Log.d("temperature_preference", temperature_preference.toString());
-                Log.d("dressing_style", dressing_style.toString());
-                Log.d("specify_location", specify_location.toString());
-                Log.d("location", location);
-                Log.d("temperature", temperature.toString());
-                Log.d("wind_speed", wind_speed.toString());
-            }
-        });
-
-        temperature = (TextView) findViewById(R.id.temperature);
-        cityName = (TextView) findViewById(R.id.cityName);
+        weatherIconViewWeather = (WeatherIconView) findViewById(R.id.weather);
+        textViewTemperature = (TextView) findViewById(R.id.temperature);
+        textViewCityName = (TextView) findViewById(R.id.cityName);
+        textViewHumidity = (TextView) findViewById(R.id.humidity);
+        textViewPressure = (TextView) findViewById(R.id.pressure);
+        textViewWind = (TextView) findViewById(R.id.wind);
+        textViewRecommender = (TextView) findViewById(R.id.recommender);
     }
 
     @Override

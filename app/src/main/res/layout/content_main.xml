@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res/org.reyan.weatherwear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -13,20 +14,86 @@
     tools:showIn="@layout/activity_main"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/testButton"
-        android:text="testButton"
+    <com.github.pwittchen.weathericonview.WeatherIconView
+        android:id="@+id/weather"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        custom:weatherIconColor="@android:color/black"
+        custom:weatherIconSize="100" />
 
     <TextView
         android:id="@+id/temperature"
+        android:text="temperature"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/weather"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/cityName"
+        android:text="cityName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/temperature"
+        android:layout_toRightOf="@+id/weather"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15sp"
+        android:padding="2dp"
+        android:shadowColor="#ff8c00"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="0.01" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/humidity"
+        android:text="humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cityName"
+        android:layout_toRightOf="@+id/weather" />
+
+    <TextView
+        android:id="@+id/pressure"
+        android:text="pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/humidity"
+        android:layout_toRightOf="@+id/weather" />
+
+    <TextView
+        android:id="@+id/wind"
+        android:text="wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pressure"
+        android:layout_toRightOf="@+id/weather" />
+
+    <TextView
+        android:id="@+id/recommender"
+        android:text="recommerder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/weather"/>
+
+    <!--<ListView-->
+    <!--android:id="@+id/listView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Hi,this is Wiwi.Good morning my darling. Your Special recommendation"-->
+    <!--android:layout_below="@+id/recommender"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:background="#fff5d376" />-->
+
+    <Button
+        android:id="@+id/moreinfo"
+        android:text="Wiwi wanna tell you more :)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
