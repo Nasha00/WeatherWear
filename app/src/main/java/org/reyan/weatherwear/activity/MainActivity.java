@@ -64,15 +64,15 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 // ui update here
-                temperature.setText(String.valueOf(weather.getTemperature()));
+                temperature.setText(String.valueOf(weather.getTempF()));
                 cityName.setText(weather.getCityName());
             }
         }
 
     };
 
-    private Weather weather = Weather.mock();
-    private Dressing dressing = Dressing.mock();
+    private Weather weather = new Weather();
+    private Dressing dressing = new Dressing();
 
     public Handler getHandler() { return handler; }
     public Weather getWeather() { return weather; }
