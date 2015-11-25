@@ -1,9 +1,13 @@
 package org.reyan.weatherwear.service;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.widget.TextView;
 
 import com.github.pwittchen.weathericonview.WeatherIconView;
@@ -17,6 +21,9 @@ import org.reyan.weatherwear.domain.Weather;
  * Created by reyan on 11/10/15.
  */
 public class UIUpdateHandler extends Handler {
+
+    public static final int STATUS_SUCCESS = 0;
+    public static final int STATUS_NETWORK_PROBLEM = 1;
 
     private MainActivity mainActivity;
 
@@ -48,7 +55,7 @@ public class UIUpdateHandler extends Handler {
 
     @Override
     public void handleMessage(Message msg) {
-        if (msg.what == 0) {
+        if (msg.what == STATUS_SUCCESS) {
             /*
                 For weather icon, later we can combine wind and temperature
                 to choose a better one
@@ -150,6 +157,23 @@ public class UIUpdateHandler extends Handler {
                 textViewWind.setText(String.format("%.2f", weather.getWindSpeedKPH()) + "KPH");
             }
             textViewRecommender.setText(dressing.toString());
+
+        } else if (msg.what == STATUS_NETWORK_PROBLEM) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+            builder.setMessage("Please go to settings to ensure your network is turned on")
+                    .setTitle("Network Problem");
+            builder.setPositiveButton("Go Settings", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mainActivity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.create().show();
         }
     }
 }

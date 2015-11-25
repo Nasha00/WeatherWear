@@ -1,6 +1,5 @@
 package org.reyan.weatherwear.thread;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 

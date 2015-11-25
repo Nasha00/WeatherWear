@@ -19,9 +19,7 @@ public class ManualUpdateThread extends Thread {
     @Override
     public void run() {
         Log.d("ManualThread", "running");
-        if (UpdateService.update(mainActivity)) {
-            mainActivity.getHandler().sendEmptyMessage(0);
-        }
+        UpdateService.update(mainActivity);
     }
 
 }

@@ -19,7 +19,7 @@ import org.reyan.weatherwear.activity.MainActivity;
  */
 public class UpdateService {
 
-    public static boolean update(MainActivity mainActivity) {
+    public static void update(MainActivity mainActivity) {
         SharedPreferences settings =
                 PreferenceManager.getDefaultSharedPreferences(mainActivity);
         boolean specifyLocation = settings.getBoolean("specify_location", false);
@@ -38,71 +38,68 @@ public class UpdateService {
         }
 
         if (key == null) {
-            return false;
-        }
-        //TODO
-            /* several steps:
-            1. get json object, if null, not update
-            2. else update weather based on json
-            3. and call algorithm to update dressing
-             */
-        // need synchronized here for domain?
-        JSONObject json = null;
-        try {
-            if (specifyLocation) {
-                json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_ID);
+            // Most likely to the be network problem
+            mainActivity.getHandler().sendEmptyMessage(UIUpdateHandler.STATUS_NETWORK_PROBLEM);
+        } else {
+            // Get JSONObject
+            JSONObject json = null;
+            try {
+                if (specifyLocation) {
+                    json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_ID);
+                } else {
+                    json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_COORDINATE);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            // Update Weather Object
+            if (json == null) {
+                // Most likely to be the network problem
+                mainActivity.getHandler().sendEmptyMessage(UIUpdateHandler.STATUS_NETWORK_PROBLEM);
             } else {
-                json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_COORDINATE);
+                boolean isWeatherUpdated;
+                if (specifyLocation) {
+                    isWeatherUpdated = WeatherUpdateService
+                            .updateWeatherById(mainActivity.getWeather(), json);
+
+                    Log.d("Update Weather", mainActivity.getWeather().getCityName());
+                    Log.d("Update Weather", mainActivity.getWeather().getCountryName());
+                    Log.d("Update Weather", mainActivity.getWeather().getIconCode());
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempF()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempC()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindDegrees()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedKPH()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedMPH()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getHumidity()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getPressure()));
+                } else {
+                    isWeatherUpdated = WeatherUpdateService
+                            .updateWeatherByCoordinate(mainActivity.getWeather(), json);
+
+                    Log.d("Update Weather", mainActivity.getWeather().getCityName());
+                    Log.d("Update Weather", mainActivity.getWeather().getCountryName());
+                    Log.d("Update Weather", mainActivity.getWeather().getIconCode());
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempF()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempC()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindDegrees()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedKPH()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedMPH()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getHumidity()));
+                    Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getPressure()));
+                }
+
+                if (isWeatherUpdated) {
+                    DressingUpdateService.updateDressing(mainActivity);
+
+                    Log.d("dressing test", mainActivity.getDressing().toString());
+
+                    mainActivity.getHandler().sendEmptyMessage(UIUpdateHandler.STATUS_SUCCESS);
+                }
+                // isWeatherUpdated == false:
+                // JSONObject Problem (very rare, ignored)
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
-        if (json != null) {
-            Log.d("UPDATE", "running");
-
-            boolean isWeatherUpdated = false;
-            if (specifyLocation) {
-                isWeatherUpdated =
-                        WeatherUpdateService.updateWeatherById(mainActivity.getWeather(), json);
-
-                Log.d("Update Weather", mainActivity.getWeather().getCityName());
-                Log.d("Update Weather", mainActivity.getWeather().getCountryName());
-                Log.d("Update Weather", mainActivity.getWeather().getIconCode());
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempF()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempC()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindDegrees()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedKPH()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedMPH()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getHumidity()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getPressure()));
-            } else {
-                isWeatherUpdated =
-                        WeatherUpdateService.updateWeatherByCoordinate(mainActivity.getWeather(), json);
-
-                Log.d("Update Weather", mainActivity.getWeather().getCityName());
-                Log.d("Update Weather", mainActivity.getWeather().getCountryName());
-                Log.d("Update Weather", mainActivity.getWeather().getIconCode());
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempF()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getTempC()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindDegrees()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedKPH()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getWindSpeedMPH()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getHumidity()));
-                Log.d("Update Weather", String.valueOf(mainActivity.getWeather().getPressure()));
-            }
-
-            if (isWeatherUpdated) {
-                DressingUpdateService.updateDressing(mainActivity);
-                Log.d("dressing test", mainActivity.getDressing().toString());
-            }
-            // ??? synchonized(this) {}
-            // update weather based on json
-            // update dressing using algorithm
-            return true;
-        }
-
-        return false;
     }
 
 }

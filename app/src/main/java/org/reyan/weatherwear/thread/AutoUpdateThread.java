@@ -27,9 +27,7 @@ public class AutoUpdateThread extends Thread {
     public void run() {
         while (!finished) {
             Log.d("AutoThread", "running");
-            if (UpdateService.update(mainActivity)) {
-                mainActivity.getHandler().sendEmptyMessage(0);
-            }
+            UpdateService.update(mainActivity);
 
             try {
                 sleep(INTERVAL);

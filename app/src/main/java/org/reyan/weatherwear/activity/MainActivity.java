@@ -207,6 +207,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d("Google Play Services", "onConnectionFailed is called");
-        // need to inquiry of user
+
+        // need to handler
+        // refers to:
+        // https://developers.google.com/android/guides/api-client#handle_connection_failures
     }
 }
