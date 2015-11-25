@@ -1,5 +1,7 @@
 package org.reyan.weatherwear.thread;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import org.json.JSONArray;
@@ -18,9 +20,16 @@ import java.util.List;
 public class SearchAsyncTask extends AsyncTask<String, Void, List<City>> {
 
     private SearchableActivity searchableActivity;
+    private ProgressDialog progressDialog;
 
     public SearchAsyncTask(SearchableActivity searchableActivity) {
         this.searchableActivity = searchableActivity;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressDialog = new ProgressDialog(searchableActivity);
+        progressDialog.show();
     }
 
     @Override
@@ -52,6 +61,7 @@ public class SearchAsyncTask extends AsyncTask<String, Void, List<City>> {
 
     @Override
     public void onPostExecute(List<City> result) {
+        progressDialog.dismiss();
         searchableActivity.show(result);
     }
 }

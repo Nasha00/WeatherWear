@@ -167,7 +167,9 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
 
-        autoUpdateThread.close();
+        if (autoUpdateThread != null) {
+            autoUpdateThread.close();
+        }
 
         if (googleApiClient.isConnected()) {
             stopLocationUpdates();
