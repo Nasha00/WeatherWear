@@ -8,6 +8,8 @@ import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.android.gms.location.LocationServices;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.reyan.weatherwear.activity.MainActivity;
@@ -20,18 +22,16 @@ public class UpdateService {
     public static boolean update(MainActivity mainActivity) {
         SharedPreferences settings =
                 PreferenceManager.getDefaultSharedPreferences(mainActivity);
-        Boolean specify_location = settings.getBoolean("specify_location", false);
+        boolean specifyLocation = settings.getBoolean("specify_location", false);
 
         String key = null;
-        if (specify_location) {
+        if (specifyLocation) {
             key = settings.getString("location",
                     "/q/zmw:92101.1.99999@San Diego, California, US").split("@", 2)[0];
         } else {
-            LocationManager locationManager =
-                    (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
+            Location location = LocationServices
+                    .FusedLocationApi
+                    .getLastLocation(mainActivity.getGoogleApiClient());
             if (location != null) {
                 key = "lat=" + location.getLatitude() + "&lon=" + location.getLongitude();
             }
@@ -49,7 +49,7 @@ public class UpdateService {
         // need synchronized here for domain?
         JSONObject json = null;
         try {
-            if (specify_location) {
+            if (specifyLocation) {
                 json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_ID);
             } else {
                 json = JSONService.getJSONObject(key, JSONService.ACQUIRE_WEATHER_BY_COORDINATE);
@@ -62,7 +62,7 @@ public class UpdateService {
             Log.d("UPDATE", "running");
 
             boolean isWeatherUpdated = false;
-            if (specify_location) {
+            if (specifyLocation) {
                 isWeatherUpdated =
                         WeatherUpdateService.updateWeatherById(mainActivity.getWeather(), json);
 
