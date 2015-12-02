@@ -2,6 +2,7 @@ package org.reyan.weatherwear.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,11 +10,16 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.pwittchen.weathericonview.WeatherIconView;
+import com.github.xizzhu.simpletooltip.ToolTip;
+import com.github.xizzhu.simpletooltip.ToolTipView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -54,12 +60,23 @@ public class MainActivity extends AppCompatActivity
 
     // UI references
     private WeatherIconView weatherIconViewWeather;
+
     private TextView textViewTemperature;
     private TextView textViewCityName;
     private TextView textViewHumidity;
     private TextView textViewPressure;
     private TextView textViewWind;
     private TextView textViewRecommender;
+
+    private ImageButton imageButtonClothes;
+    private ImageButton imageButtonTrousers;
+    private ImageButton imageButtonHead;
+    private ImageButton imageButtonFeet;
+
+    private ToolTipView toolTipViewClothes;
+    private ToolTipView toolTipViewTrousers;
+    private ToolTipView toolTipViewHead;
+    private ToolTipView toolTipViewFeet;
 
     // getters
     public GoogleApiClient getGoogleApiClient() { return googleApiClient; }
@@ -90,6 +107,10 @@ public class MainActivity extends AppCompatActivity
         textViewPressure = (TextView) findViewById(R.id.pressure);
         textViewWind = (TextView) findViewById(R.id.wind);
         textViewRecommender = (TextView) findViewById(R.id.recommender);
+        imageButtonClothes = (ImageButton) findViewById(R.id.clothes);
+        imageButtonTrousers  = (ImageButton) findViewById(R.id.trousers);
+        imageButtonHead = (ImageButton) findViewById(R.id.head);
+        imageButtonFeet = (ImageButton) findViewById(R.id.feet);
 
         handler = new UIUpdateHandler(this);
 
@@ -151,6 +172,8 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
+        setImageButtonOnClickListener();
+
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         boolean specifyLocation = settings.getBoolean("specify_location", false);
 
@@ -211,5 +234,111 @@ public class MainActivity extends AppCompatActivity
         // need to handler
         // refers to:
         // https://developers.google.com/android/guides/api-client#handle_connection_failures
+    }
+
+    private void setImageButtonOnClickListener() {
+        imageButtonClothes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toolTipViewClothes != null) {
+                    toolTipViewClothes.remove();
+                }
+                String upper = dressing.getUpper();
+                if ("".equals(upper)) {
+                    upper = "No clothes";
+                }
+                ToolTip toolTip = new ToolTip.Builder()
+                        .withText(upper)
+                        .withTextSize(50)
+                        .withTextColor(Color.MAGENTA)
+                        .withBackgroundColor(Color.CYAN)
+                        .withPadding(15, 15, 10, 10)
+                        .build();
+                toolTipViewClothes = new ToolTipView.Builder(MainActivity.this)
+                        .withAnchor(v)
+                        .withToolTip(toolTip)
+                        .withGravity(Gravity.LEFT)
+                        .build();
+                toolTipViewClothes.show();
+            }
+        });
+
+        imageButtonTrousers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toolTipViewTrousers != null) {
+                    toolTipViewTrousers.remove();
+                }
+                String lower = dressing.getLower();
+                if ("".equals(lower)) {
+                    lower = "No trousers";
+                }
+                ToolTip toolTip = new ToolTip.Builder()
+                        .withText(lower)
+                        .withTextSize(50)
+                        .withTextColor(Color.RED)
+                        .withBackgroundColor(Color.YELLOW)
+                        .withPadding(15, 15, 10, 10)
+                        .build();
+                toolTipViewTrousers = new ToolTipView.Builder(MainActivity.this)
+                        .withAnchor(v)
+                        .withToolTip(toolTip)
+                        .withGravity(Gravity.LEFT)
+                        .build();
+                toolTipViewTrousers.show();
+            }
+        });
+
+        imageButtonHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toolTipViewHead != null) {
+                    toolTipViewHead.remove();
+                }
+                String hat = dressing.getHat();
+                if ("".equals(hat)) {
+                    hat = "No hat";
+                }
+                ToolTip toolTip = new ToolTip.Builder()
+                        .withText(hat)
+                        .withTextSize(50)
+                        .withTextColor(Color.YELLOW)
+                        .withBackgroundColor(Color.RED)
+                        .withPadding(15, 15, 10, 10)
+                        .build();
+                toolTipViewHead = new ToolTipView.Builder(MainActivity.this)
+                        .withAnchor(v)
+                        .withToolTip(toolTip)
+                        .withGravity(Gravity.TOP)
+                        .build();
+                toolTipViewHead.show();
+            }
+        });
+
+        imageButtonFeet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toolTipViewFeet != null) {
+                    toolTipViewFeet.remove();
+                }
+                String shoe = dressing.getShoes();
+                if ("".equals(shoe)) {
+                    shoe = "No shoe";
+                }
+                ToolTip toolTip = new ToolTip.Builder()
+                        .withText(shoe)
+                        .withTextSize(50)
+                        .withTextColor(Color.BLUE)
+                        .withBackgroundColor(Color.GREEN)
+                        .withPadding(15, 15, 10, 10)
+                        .build();
+                toolTipViewFeet = new ToolTipView.Builder(MainActivity.this)
+                        .withAnchor(v)
+                        .withToolTip(toolTip)
+                        .withGravity(Gravity.BOTTOM)
+                        .build();
+                toolTipViewFeet.show();
+            }
+        });
     }
 }
