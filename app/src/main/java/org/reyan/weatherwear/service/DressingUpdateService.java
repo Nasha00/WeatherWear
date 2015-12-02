@@ -57,7 +57,7 @@ public class DressingUpdateService {
                     if (windSpeedKPH >= 10) {
                         dressing.setHat("hat");
                     }
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         if (isMale) {
                             dressing.setUpper("t-shirt");
                             dressing.setLower("shorts");
@@ -88,7 +88,7 @@ public class DressingUpdateService {
                     if (windSpeedKPH >= 10) {
                         dressing.setHat("hat");
                     }
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         if (isMale) {
                             dressing.setUpper("t-shirt");
                             dressing.setLower("shorts");
@@ -96,7 +96,7 @@ public class DressingUpdateService {
                             dressing.setDress("dress");
                         }
                         dressing.setShoes("sandal");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("long sleeve shirts");
                         dressing.setLower("trousers");
                         dressing.setShoes("sneaker");
@@ -116,11 +116,11 @@ public class DressingUpdateService {
                 case "thunderstorm night":
                     dressing.setHat("hat");
                     dressing.setUmbrella("umbrella");
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         dressing.setUpper("t-shirt");
                         dressing.setLower("shorts");
                         dressing.setShoes("sandal");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("long sleeve shirts");
                         dressing.setLower("trousers");
                         dressing.setShoes("sneaker");
@@ -135,11 +135,11 @@ public class DressingUpdateService {
                 case "snow day":
                 case "snow night":
                     dressing.setHat("hat");
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         dressing.setUpper("t-shirt");
                         dressing.setLower("shorts");
                         dressing.setShoes("sandal");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("long sleeve shirts");
                         dressing.setLower("trousers");
                         dressing.setShoes("sneaker");
@@ -165,7 +165,7 @@ public class DressingUpdateService {
                     if (windSpeedKPH >= 10) {
                         dressing.setHat("hat");
                     }
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         if (isMale) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
@@ -173,7 +173,7 @@ public class DressingUpdateService {
                             dressing.setDress("formal dress");
                         }
                         dressing.setShoes("sandal");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("suit jacket");
                         dressing.setLower("suit pant");
                         dressing.setShoes("dress shoes");
@@ -196,7 +196,7 @@ public class DressingUpdateService {
                     if (windSpeedKPH >= 10) {
                         dressing.setHat("hat");
                     }
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         if (isMale) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
@@ -204,7 +204,7 @@ public class DressingUpdateService {
                             dressing.setDress("formal dress");
                         }
                         dressing.setShoes("sandal");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("suit jacket");
                         dressing.setLower("suit pant");
                         dressing.setShoes("dress shoes");
@@ -224,7 +224,7 @@ public class DressingUpdateService {
                 case "thunderstorm night":
                     dressing.setHat("hat");
                     dressing.setUmbrella("umbrella");
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         if (isMale) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
@@ -232,7 +232,7 @@ public class DressingUpdateService {
                             dressing.setDress("formal dress");
                         }
                         dressing.setShoes("sandal");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("suit jacket");
                         dressing.setLower("suit pant");
                         dressing.setShoes("dress shoes");
@@ -247,7 +247,7 @@ public class DressingUpdateService {
                 case "snow day":
                 case "snow night":
                     dressing.setHat("hat");
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         if (isMale) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
@@ -255,7 +255,7 @@ public class DressingUpdateService {
                             dressing.setDress("formal dress");
                         }
                         dressing.setShoes("sandal");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("suit jacket");
                         dressing.setLower("suit pant");
                         dressing.setShoes("dress shoes");
@@ -282,7 +282,7 @@ public class DressingUpdateService {
                     if (windSpeedKPH >= 10) {
                         dressing.setHat("hat");
                     }
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         if (isMale) {
                             dressing.setUpper("t-shirt");
                             dressing.setLower("shorts");
@@ -290,7 +290,7 @@ public class DressingUpdateService {
                             dressing.setDress("dress");
                         }
                         dressing.setShoes("flip-flop");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("long sleeve shirts");
                         dressing.setLower("trousers");
                         dressing.setShoes("running shoe");
@@ -313,11 +313,11 @@ public class DressingUpdateService {
                     if (windSpeedKPH >= 10) {
                         dressing.setHat("hat");
                     }
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         dressing.setUpper("t-shirt");
                         dressing.setLower("shorts");
                         dressing.setShoes("flip-flop");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("long sleeve shirts");
                         dressing.setLower("trousers");
                         dressing.setShoes("running shoe");
@@ -337,11 +337,11 @@ public class DressingUpdateService {
                 case "thunderstorm night":
                     dressing.setHat("hat");
                     dressing.setUmbrella("umbrella");
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         dressing.setUpper("t-shirt");
                         dressing.setLower("shorts");
                         dressing.setShoes("running shoe");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("long sleeve shirts");
                         dressing.setLower("trousers");
                         dressing.setShoes("running shoe");
@@ -356,11 +356,11 @@ public class DressingUpdateService {
                 case "snow day":
                 case "snow night":
                     dressing.setHat("hat");
-                    if (tempC >= 26) {
+                    if (tempC >= 20) {
                         dressing.setUpper("t-shirt");
                         dressing.setLower("shorts");
                         dressing.setShoes("running shoe");
-                    } else if (tempC >= 13) {
+                    } else if (tempC >= 8) {
                         dressing.setUpper("long sleeve shirts");
                         dressing.setLower("trousers");
                         dressing.setShoes("running shoe");
