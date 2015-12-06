@@ -2,6 +2,7 @@ package org.reyan.weatherwear.service;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.reyan.weatherwear.activity.MainActivity;
 import org.reyan.weatherwear.domain.Dressing;
@@ -17,7 +18,7 @@ public class DressingUpdateService {
 
         //Gather gender and style information from settings
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mainActivity);
-        boolean isMale = settings.getBoolean("gender", true);
+        boolean isGirl = settings.getBoolean("gender", true);
         int temperature_preference =
                 Integer.parseInt(settings.getString("temperature_preference", "-1"));
         int dressing_style =
@@ -58,11 +59,12 @@ public class DressingUpdateService {
                         dressing.setHat("hat");
                     }
                     if (tempC >= 20) {
-                        if (isMale) {
+                        if (!isGirl) {
                             dressing.setUpper("t-shirt");
                             dressing.setLower("shorts");
                         } else {
-                            dressing.setDress("dress");
+                            dressing.setUpper("dress");
+                            dressing.setLower("dress");
                         }
                         dressing.setShoes("sandal");
                     } else if (tempC >= 13) {
@@ -89,11 +91,12 @@ public class DressingUpdateService {
                         dressing.setHat("hat");
                     }
                     if (tempC >= 20) {
-                        if (isMale) {
+                        if (!isGirl) {
                             dressing.setUpper("t-shirt");
                             dressing.setLower("shorts");
                         } else {
-                            dressing.setDress("dress");
+                            dressing.setUpper("dress");
+                            dressing.setLower("dress");
                         }
                         dressing.setShoes("sandal");
                     } else if (tempC >= 8) {
@@ -166,11 +169,12 @@ public class DressingUpdateService {
                         dressing.setHat("hat");
                     }
                     if (tempC >= 20) {
-                        if (isMale) {
+                        if (!isGirl) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
                         } else {
-                            dressing.setDress("formal dress");
+                            dressing.setUpper("dress");
+                            dressing.setLower("dress");
                         }
                         dressing.setShoes("sandal");
                     } else if (tempC >= 8) {
@@ -197,11 +201,12 @@ public class DressingUpdateService {
                         dressing.setHat("hat");
                     }
                     if (tempC >= 20) {
-                        if (isMale) {
+                        if (!isGirl) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
                         } else {
-                            dressing.setDress("formal dress");
+                            dressing.setUpper("formal dress");
+                            dressing.setLower("formal dress");
                         }
                         dressing.setShoes("sandal");
                     } else if (tempC >= 8) {
@@ -225,11 +230,12 @@ public class DressingUpdateService {
                     dressing.setHat("hat");
                     dressing.setUmbrella("umbrella");
                     if (tempC >= 20) {
-                        if (isMale) {
+                        if (!isGirl) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
                         } else {
-                            dressing.setDress("formal dress");
+                            dressing.setUpper("formal dress");
+                            dressing.setLower("formal dress");
                         }
                         dressing.setShoes("sandal");
                     } else if (tempC >= 8) {
@@ -248,11 +254,12 @@ public class DressingUpdateService {
                 case "snow night":
                     dressing.setHat("hat");
                     if (tempC >= 20) {
-                        if (isMale) {
+                        if (!isGirl) {
                             dressing.setUpper("dress shirt");
                             dressing.setLower("suit pants");
                         } else {
-                            dressing.setDress("formal dress");
+                            dressing.setUpper("formal dress");
+                            dressing.setLower("formal dress");
                         }
                         dressing.setShoes("sandal");
                     } else if (tempC >= 8) {
@@ -283,11 +290,12 @@ public class DressingUpdateService {
                         dressing.setHat("hat");
                     }
                     if (tempC >= 20) {
-                        if (isMale) {
+                        if (!isGirl) {
                             dressing.setUpper("t-shirt");
                             dressing.setLower("shorts");
                         } else {
-                            dressing.setDress("dress");
+                            dressing.setUpper("dress");
+                            dressing.setLower("dress");
                         }
                         dressing.setShoes("flip-flop");
                     } else if (tempC >= 8) {
