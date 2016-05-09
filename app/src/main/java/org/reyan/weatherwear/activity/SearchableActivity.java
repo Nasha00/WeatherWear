@@ -51,7 +51,6 @@ public class SearchableActivity extends AppCompatActivity {
                 Intent intent = new Intent(SearchableActivity.this, SettingsActivity.class);
                 intent.putExtra("id", city.getId());
                 intent.putExtra("cityName", city.getCityName());
-                intent.putExtra("stateName", city.getStateName());
                 intent.putExtra("countryName", city.getCountryName());
                 SearchableActivity.this.startActivity(intent);
             }

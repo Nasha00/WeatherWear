@@ -10,7 +10,8 @@ import org.reyan.weatherwear.service.UpdateService;
  */
 public class AutoUpdateThread extends Thread {
 
-    private static final long INTERVAL = 20000;
+    // update every ... milliseconds
+    private static final long INTERVAL = 60000;
 
     private volatile boolean finished;
 
@@ -26,9 +27,7 @@ public class AutoUpdateThread extends Thread {
     public void run() {
         while (!finished) {
             Log.d("AutoThread", "running");
-            if (UpdateService.update(mainActivity)) {
-                mainActivity.getHandler().sendEmptyMessage(0);
-            }
+            UpdateService.update(mainActivity);
 
             try {
                 sleep(INTERVAL);

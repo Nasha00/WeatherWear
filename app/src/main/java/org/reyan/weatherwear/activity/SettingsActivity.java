@@ -122,31 +122,21 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onResume();
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        String location = settings.getString("location", "id=5391811@San Diego, US");
+        String location = settings.getString("location",
+                "/q/zmw:92101.1.99999@San Diego, California, US");
 
         Preference locationPreference = (Preference) findPreference("location");
         locationPreference.setTitle(location.split("@", 2)[1]);
 
         Intent intent = getIntent();
-        long id = intent.getLongExtra("id", 0);
+        String id = intent.getStringExtra("id");
         String cityName = intent.getStringExtra("cityName");
-        String stateName = intent.getStringExtra("stateName");
         String countryName = intent.getStringExtra("countryName");
-        if (cityName != null && stateName != null && countryName != null) {
-            if ("".equals(stateName)) {
-                locationPreference.setTitle(cityName + ", " + countryName);
-            } else {
-                locationPreference.setTitle(cityName + ", " + stateName + ", " + countryName);
-            }
+        if (id != null && cityName != null && countryName != null) {
+            locationPreference.setTitle(cityName + ", " + countryName);
 
             SharedPreferences.Editor editor = settings.edit();
-            if ("".equals(stateName)) {
-                editor.putString("location", "id=" + id + "@"
-                        + cityName + ", " + countryName);
-            } else {
-                editor.putString("location", "id=" + id + "@"
-                        + cityName + ", " + stateName + ", " + countryName);
-            }
+            editor.putString("location", id + "@" + cityName + ", " + countryName);
             editor.commit();
         }
     }

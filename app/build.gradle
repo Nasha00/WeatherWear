@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "org.reyan.weatherwear"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -19,10 +19,17 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
     compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.github.pwittchen:weathericonview:1.1.0'
+    compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.github.xizzhu:simple-tool-tip:0.3.0'
 }

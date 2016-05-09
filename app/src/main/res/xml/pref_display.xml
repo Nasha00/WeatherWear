@@ -11,9 +11,9 @@
     <SwitchPreference
         android:key="wind_speed"
         android:title="@string/pref_title_wind_speed"
-        android:summary="Meter per second/Miles per hour"
+        android:summary="Kilometers per hour/Miles per hour"
         android:defaultValue="true"
-        android:switchTextOn="mph"
-        android:switchTextOff="mps"/>
+        android:switchTextOn="MPH"
+        android:switchTextOff="KPH"/>
 
 </PreferenceScreen>

@@ -8,7 +8,7 @@
     <Preference
         android:dependency="specify_location"
         android:key="location"
-        android:defaultValue="5391811@San Diego, US">
+        android:defaultValue="/q/zmw:92101.1.99999@San Diego, California, US">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="org.reyan.weatherwear"
